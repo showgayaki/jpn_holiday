@@ -14,7 +14,8 @@
     <p class="view-url">
       <span>API URL:{{ api_url }}</span>
       <span v-if=date_search>{{ date_search.replace(date_search, '?date=' + date_search) }}</span>
-      <span v-if=name_search>{{ name_search.replace(name_search, '?name=' + name_search) }}</span>
+      <span v-else-if="name_search">{{ name_search.replace(name_search, '?name=' + name_search) }}</span>
+      <span v-if="date_search && name_search">{{ name_search.replace(name_search, '&name=' + name_search) }}</span>
     </p>
     <el-table class="holiday-table"
         :data="holidays"
