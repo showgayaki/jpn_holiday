@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-if Path.joinpath(BASE_DIR, 'local_settings.py').exists:
+if Path.joinpath(Path.joinpath(Path(__file__).resolve().parent, 'local_settings.py')).exists():
     from .local_settings import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
