@@ -11,14 +11,17 @@
         <el-input id="name-filter" class="filter-text" placeholder="Search Name" v-model="name_search" suffix-icon="search">name</el-input>
       </p>
     </div>
-    <p class="view-url">
-      <span>API URL:{{ api_url }}</span>
-      <span v-if=date_search>{{ date_search.replace(date_search, '?date=' + date_search) }}</span>
-      <span v-else-if="name_search">{{ name_search.replace(name_search, '?name=' + name_search) }}</span>
-      <span v-if="date_search && name_search">{{ name_search.replace(name_search, '&name=' + name_search) }}</span>
-    </p>
+    <div class="api-url-wrap">
+      <p class="api-url">API URL:</p>
+      <p class="view-url">
+        <span>{{ api_url }}</span>
+        <span v-if="date_search">{{ date_search.replace(date_search, '?date=' + date_search) }}</span>
+        <span v-else-if="name_search">{{ name_search.replace(name_search, '?name=' + name_search) }}</span>
+        <span v-if="date_search && name_search">{{ name_search.replace(name_search, '&name=' + name_search) }}</span>
+      </p>
+    </div>
     <el-table class="holiday-table"
-        :data="holidays"
+        :data="search_record"
         :default-sort="{prop: 'date', order: 'ascending'}"
     >
       <el-table-column prop="date" label="日付" sortable></el-table-column>
@@ -55,6 +58,25 @@ export default Vue.extend({
     // console.log(res.data);
     this.holidays = res.data;
   },
+  computed: {
+    search_record(){
+      return this.holidays.filter(holiday => {
+        if(this.date_search === '' && this.name_search === ''){
+          return this.holidays;
+        }
+        if(this.date_search !== '' && this.name_search !== ''){
+          return holiday.date.includes(this.date_search) &&
+                  holiday.name.includes(this.name_search);
+        }
+        if(this.date_search !== ''){
+          return holiday.date.includes(this.date_search);
+        }
+        if(this.name_search !== ''){
+          return holiday.name.includes(this.name_search);
+        }
+      })
+    }
+  }
 });
 </script>
 
@@ -72,11 +94,13 @@ export default Vue.extend({
 .filter-text{
   width: 300px;
 }
-.view-url{
-  margin: 1rem 0;
+.api-url-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
 }
 .api-url{
-  padding: 0.5rem;
+  margin-right: 1rem;
 }
 .holiday-table{
   border: 1px solid rgba(0, 0, 0, .2);
