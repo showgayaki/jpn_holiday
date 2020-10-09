@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'jpn_holiday'
 urlpatterns = [
-    path('jpn_holiday/', views.JpnHolidayList.as_view(), name='jpn_holiday'),
+    path('jpn_holiday/', views.JpnHolidayList.as_view({'get': 'list'}), name='jpn_holiday'),
 ]
