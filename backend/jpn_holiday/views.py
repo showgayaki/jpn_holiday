@@ -1,10 +1,12 @@
-from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.renderers import JSONRenderer
 from .models import JpnHoliday
 from .serializers import JpnHolidaySerializer
 
 
-class JpnHolidayList(generics.ListAPIView):
+class JpnHolidayList(viewsets.ReadOnlyModelViewSet):
     serializer_class = JpnHolidaySerializer
+    renderer_classes = [JSONRenderer]
 
     def get_queryset(self):
         queryset = JpnHoliday.objects.all()
