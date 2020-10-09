@@ -1,6 +1,6 @@
 <template>
   <div class="holiday-wrap">
-    <h2>日本の祝祭日</h2>
+    <h2>日本の祝日API</h2>
     <div class="holiday-filter">
       <p>
         <label class="filter-label" for="date-filter">date</label>
@@ -20,6 +20,7 @@
         <span v-if="date_search && name_search">{{ name_search.replace(name_search, '&name=' + name_search) }}</span>
       </p>
     </div>
+    <p class="record-count">レコード件数:{{ search_record.length }}</p>
     <el-table class="holiday-table"
         :data="search_record"
         :default-sort="{prop: 'date', order: 'ascending'}"
@@ -100,7 +101,7 @@ export default Vue.extend({
   margin: 0.5rem 0;
 }
 .api-url{
-  margin-right: 1rem;
+  margin-right: 0.4rem;
 }
 .holiday-table{
   border: 1px solid rgba(0, 0, 0, .2);
