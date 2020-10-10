@@ -12,13 +12,16 @@
       </p>
     </div>
     <div class="api-url-wrap">
-      <p class="api-url">API URL:</p>
-      <p class="view-url">
-        <span>{{ api_url }}</span>
-        <span v-if="date_search">{{ date_search.replace(date_search, '?date=' + date_search) }}</span>
-        <span v-else-if="name_search">{{ name_search.replace(name_search, '?name=' + name_search) }}</span>
-        <span v-if="date_search && name_search">{{ name_search.replace(name_search, '&name=' + name_search) }}</span>
-      </p>
+      <p class="api-url-label">API URL:</p>
+      <div class="api-url">
+        <button type="button" class="btn-copy" @click="copyToClipboard()"></button>
+        <p id="view-url" class="view-url">
+          <span>{{ api_url }}</span>
+          <span v-if="date_search">{{ date_search.replace(date_search, '?date=' + date_search) }}</span>
+          <span v-else-if="name_search">{{ name_search.replace(name_search, '?name=' + name_search) }}</span>
+          <span v-if="date_search && name_search">{{ name_search.replace(name_search, '&name=' + name_search) }}</span>
+        </p>
+      </div>
     </div>
     <p class="record-count">レコード件数:{{ search_record.length }}</p>
     <el-table class="holiday-table"
@@ -77,6 +80,19 @@ export default Vue.extend({
         }
       })
     }
+  },
+  methods:{
+    copyToClipboard(){
+      const copyText: string = this.$el.querySelector('#view-url').textContent
+      navigator.clipboard
+        .writeText(copyText)
+        .then(() => {
+          console.log('Copy Succeeded.');
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    }
   }
 });
 </script>
@@ -99,9 +115,35 @@ export default Vue.extend({
   display: flex;
   flex-wrap: wrap;
   margin: 0.5rem 0;
+  line-height: 1rem;
+}
+.api-url-label{
+  width: 72px;
+  padding-top: 0.4rem;
 }
 .api-url{
-  margin-right: 0.4rem;
+  display: flex;
+}
+button.btn-copy{
+  padding: 0 0.2rem;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-right: 0;
+  border-radius: 3px 0 0 3px;
+  cursor: pointer;
+}
+button.btn-copy:before{
+  padding: 0 0.2rem;
+  font-family: FontAwesome;
+  content: "\f0ea";
+}
+.view-url{
+  width: calc(100vw - (159px + 0.8rem));
+  padding: 0.4rem;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 0 3px 3px 0;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 .holiday-table{
   border: 1px solid rgba(0, 0, 0, .2);
