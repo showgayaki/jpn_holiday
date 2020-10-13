@@ -14,7 +14,7 @@
     <div class="api-url-wrap">
       <p class="api-url-label">API URL:</p>
       <div class="api-url">
-        <button type="button" class="btn-copy" @click="copyToClipboard()"></button>
+        <el-button type="button" class="btn-copy" icon="el-icon-document-copy" @click="copyToClipboard()"></el-button>
         <p id="view-url" class="view-url">
           <span>{{ api_url }}</span>
           <span v-if="date_search">{{ date_search.replace(date_search, '?date=' + date_search) }}</span>
@@ -127,17 +127,12 @@ export default Vue.extend({
   display: flex;
 }
 button.btn-copy{
-  padding: 0 0.2rem;
+  padding: 0 0.4rem;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, .2);
   border-right: 0;
   border-radius: 3px 0 0 3px;
   cursor: pointer;
-}
-button.btn-copy:before{
-  padding: 0 0.2rem;
-  font-family: FontAwesome;
-  content: "\f0ea";
 }
 .view-url{
   width: calc(100vw - (159px + 0.8rem));
