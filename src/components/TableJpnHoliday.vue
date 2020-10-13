@@ -4,11 +4,11 @@
     <div class="holiday-filter">
       <p>
         <label class="filter-label" for="date-filter">date</label>
-        <el-input id="date-filter" class="filter-text" placeholder="Search Date" v-model="date_search" suffix-icon="search"></el-input>
+        <el-input id="date-filter" class="filter-text" placeholder="Search Date" v-model="date_search" suffix-icon="el-icon-search"></el-input>
       </p>
       <p>
         <label class="filter-label" for="name-filter">name</label>
-        <el-input id="name-filter" class="filter-text" placeholder="Search Name" v-model="name_search" suffix-icon="search">name</el-input>
+        <el-input id="name-filter" class="filter-text" placeholder="Search Name" v-model="name_search" suffix-icon="el-icon-search">name</el-input>
       </p>
     </div>
     <div class="api-url-wrap">
@@ -36,9 +36,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
-const API_URL = 'http://127.0.0.1:8000/api/jpn_holiday/';
+const API_URL = process.env.VUE_APP_API_URL;
 
 // API 実行結果
 class JpnHoliday {
@@ -56,11 +56,13 @@ export default Vue.extend({
     };
   },
   created: async function(){
-    const res: AxiosResponse = await axios.get(
-        API_URL,
-    );
-    // console.log(res.data);
-    this.holidays = res.data;
+    await axios.get(API_URL)
+      .then(res =>{
+        this.holidays = res.data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
   },
   computed: {
     search_record(){
