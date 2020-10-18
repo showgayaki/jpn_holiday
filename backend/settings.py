@@ -29,7 +29,7 @@ if Path.joinpath(Path.joinpath(Path(__file__).resolve().parent, 'local_settings.
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [os.environ['EB_CNAME']]
 
 # Application definition
 
