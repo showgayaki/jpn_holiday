@@ -1,0 +1,7 @@
+.venv
+.vscode
+__pycache__
+local_settings.py
+csv/
+node_modules
+.env.local
