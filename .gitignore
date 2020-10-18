@@ -5,6 +5,7 @@ local_settings.py
 db.sqlite3
 csv/
 node_modules
+.env
 .env.local
 
 # Elastic Beanstalk Files
