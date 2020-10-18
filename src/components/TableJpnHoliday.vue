@@ -35,10 +35,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
 import axios from "axios";
 
-const API_URL = process.env.VUE_APP_API_URL;
+const API_URL: string = process.env.VUE_APP_API_URL;
 
 // API 実行結果
 class JpnHoliday {
@@ -50,13 +50,13 @@ export default Vue.extend({
   data(){
     return {
       api_url: API_URL,
-      holidays: [new JpnHoliday()],
+      holidays: [new JpnHoliday],
       date_search: '',
       name_search: '',
     };
   },
   created: async function(){
-    await axios.get(API_URL)
+    await axios.get(this.api_url)
       .then(res =>{
         this.holidays = res.data;
       })
@@ -65,7 +65,7 @@ export default Vue.extend({
       })
   },
   computed: {
-    search_record(){
+    search_record(): JpnHoliday[]{
       return this.holidays.filter(holiday => {
         if(this.date_search === '' && this.name_search === ''){
           return this.holidays;
@@ -85,15 +85,17 @@ export default Vue.extend({
   },
   methods:{
     copyToClipboard(){
-      const copyText: string = this.$el.querySelector('#view-url').textContent
-      navigator.clipboard
-        .writeText(copyText)
-        .then(() => {
-          console.log('Copy Succeeded.');
-        })
-        .catch(e => {
-          console.log(e);
-        })
+      const copyText: string | null = this.$el.querySelector('#view-url')!.textContent;
+      if(copyText){
+        navigator.clipboard
+          .writeText(copyText)
+          .then(() => {
+            console.log('Copy Succeeded.');
+          })
+          .catch(e => {
+            console.log(e);
+          })
+      }
     }
   }
 });
