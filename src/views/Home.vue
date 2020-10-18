@@ -1,6 +1,5 @@
 <template>
-  <!-- <tableJpnHoliday></tableJpnHoliday> -->
-  <tableJpnHoliday/>
+  <tableJpnHoliday />
 </template>
 
 <script lang="ts">

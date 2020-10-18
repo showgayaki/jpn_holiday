@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>Japanese Holiday API</title>
+    <script>
+      (function (l) {
+          if (l.search) {
+              var q = {};
+              l.search.slice(1).split('&').forEach(function (v) {
+                  var a = v.split('=');
+                  q[a[0]] = a[1];
+              });
+              if (q.p !== undefined) {
+                  window.history.replaceState(null, null, l.pathname.slice(0, -1) + (q.p || ''));
+              }
+          }
+      }(window.location))
+    </script>
   </head>
   <body>
     <div id="app"></div>
