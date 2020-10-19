@@ -49,14 +49,13 @@ class JpnHoliday {
 export default Vue.extend({
   data(){
     return {
-      api_url: API_URL,
+      api_url: 'http:' + API_URL,
       holidays: [new JpnHoliday],
       date_search: '',
       name_search: '',
     };
   },
   created: async function(){
-    this.api_url = 'http:' + this.api_url;
     await axios.get(API_URL)
       .then(res =>{
         this.holidays = res.data;
