@@ -56,7 +56,8 @@ export default Vue.extend({
     };
   },
   created: async function(){
-    await axios.get(this.api_url)
+    this.api_url = 'http:' + this.api_url;
+    await axios.get(API_URL)
       .then(res =>{
         this.holidays = res.data;
       })
